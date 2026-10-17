@@ -1,3 +1,35 @@
+// -------- LOGIN SYSTEM --------
+function login() {
+  const user = document.getElementById("loginUser").value.trim();
+  const pass = document.getElementById("loginPass").value.trim();
+
+  if (!user || !pass) {
+    return alert("Please enter a name and password.");
+  }
+
+  localStorage.setItem("phirisUser", user);
+
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("mainApp").style.display = "block";
+  
+  document.getElementById("welcomeMsg").textContent = Welcome back, ${user}!;
+  
+  render();
+}
+
+function logout() {
+  localStorage.removeItem("phirisUser");
+  location.reload();
+}
+
+const savedUser = localStorage.getItem("phirisUser");
+if (savedUser) {
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("mainApp").style.display = "block";
+  document.getElementById("welcomeMsg").textContent = Welcome back, ${savedUser}!;
+}
+
+// -------- APP DATA --------
 let sales    = JSON.parse(localStorage.getItem("sales"))    || [];
 let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 let stock    = JSON.parse(localStorage.getItem("stock"))    || [];
@@ -69,20 +101,20 @@ function render() {
   const profit = totalSales - totalExp;
   const lowStock = stock.filter(s => s.qty <= s.threshold);
 
-  document.getElementById("statSales").textContent = "$" + totalSales.toFixed(2);
-  document.getElementById("statExpenses").textContent = "$" + totalExp.toFixed(2);
-  document.getElementById("statProfit").textContent = "$" + profit.toFixed(2);
+  document.getElementById("statSales").textContent = "K" + totalSales.toFixed(2);
+  document.getElementById("statExpenses").textContent = "K" + totalExp.toFixed(2);
+  document.getElementById("statProfit").textContent = "K" + profit.toFixed(2);
   document.getElementById("statLowStock").textContent = lowStock.length;
 
   document.getElementById("salesList").innerHTML = sales.map((s, i) => `
     <li>
-      <span>${s.name} × ${s.qty} @ $${s.price} = <b>$${s.total.toFixed(2)}</b></span>
+      <span>${s.name} × ${s.qty} @ K${s.price} = <b>K${s.total.toFixed(2)}</b></span>
       <div class="right"><button class="del" onclick="del(sales, ${i})">Del</button></div>
     </li>`).join("") || "<li>No sales yet</li>";
 
   document.getElementById("expensesList").innerHTML = expenses.map((e, i) => `
     <li>
-      <span>${e.name} — <b>$${e.amount.toFixed(2)}</b></span>
+      <span>${e.name} — <b>K${e.amount.toFixed(2)}</b></span>
       <div class="right"><button class="del" onclick="del(expenses, ${i})">Del</button></div>
     </li>`).join("") || "<li>No expenses yet</li>";
 
@@ -98,10 +130,10 @@ function render() {
   if (sales.length === 0 && expenses.length === 0) {
     insight = "Start by adding a sale and an expense. I'll then analyse your numbers.";
   } else if (profit < 0) {
-    insight = `⚠️ You're losing money ($${Math.abs(profit).toFixed(2)} loss). Cut costs or raise sales. ` +
+    insight = `⚠️ You're losing money (K${Math.abs(profit).toFixed(2)} loss). Cut costs or raise sales. ` +
               Expenses are ${((totalExp / (totalSales || 1)) * 100).toFixed(0)}% of your sales.;
-  } else if (profit > 0 && totalSales > 0) {
-    insight = `✅ Good job! Profit margin is ${((profit / totalSales) * 100).toFixed(0)}%. ` +
+  } else if (profit ` > 0 && totalSales > 0) {
+    insight =✅ Good job! Profit margin is ${((profit / totalSales) * 100).toFixed(0)}%. ` +
               Your top expense category is "${topExpense()}".;
     if (lowStock.length) insight += ` Restock ${lowStock.length} low item(s).`;
   }

@@ -8,78 +8,89 @@
 </head>
 <body>
 
-  <header>
-    <h1>🏪 PHIRIs Business</h1>
-    <p class="sub">Your business, all in one place</p>
-  </header>
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen" class="login-overlay">
+    <div class="login-box">
+      <h2>🏪 PHIRIs Business</h2>
+      <p>Log in to manage your business</p>
+      <input id="loginUser" type="text" placeholder="Enter your name (e.g. Peter)">
+      <input id="loginPass" type="password" placeholder="Create a password">
+      <button onclick="login()">Login / Register</button>
+    </div>
+  </div>
 
-  <!-- DASHBOARD -->
-  <section class="stats">
-    <div class="card">
-      <h3>Total Sales</h3>
-      <p id="statSales">$0</p>
-    </div>
-    <div class="card">
-      <h3>Total Expenses</h3>
-      <p id="statExpenses">$0</p>
-    </div>
-    <div class="card highlight">
-      <h3>Profit</h3>
-      <p id="statProfit">$0</p>
-    </div>
-    <div class="card">
-      <h3>Low Stock Items</h3>
-      <p id="statLowStock">0</p>
-    </div>
-  </section>
+  <!-- MAIN APP (Hidden until login) -->
+  <div id="mainApp" style="display: none;">
+    <header>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>🏪 PHIRIs Business</h1>
+        <button onclick="logout()" style="background: #e74c3c; padding: 8px 12px;">Logout</button>
+      </div>
+      <p class="sub" id="welcomeMsg">Welcome!</p>
+    </header>
 
-  <!-- AI INSIGHT -->
-  <section class="ai-box">
-    <h3>🧠 Business Insight</h3>
-    <p id="aiInsight">Add some data to see insights...</p>
-  </section>
+    <section class="stats">
+      <div class="card">
+        <h3>Total Sales</h3>
+        <p id="statSales">K0</p>
+      </div>
+      <div class="card">
+        <h3>Total Expenses</h3>
+        <p id="statExpenses">K0</p>
+      </div>
+      <div class="card highlight">
+        <h3>Profit</h3>
+        <p id="statProfit">K0</p>
+      </div>
+      <div class="card">
+        <h3>Low Stock Items</h3>
+        <p id="statLowStock">0</p>
+      </div>
+    </section>
 
-  <!-- TABS -->
-  <nav class="tabs">
-    <button class="tab active" data-tab="sales">💰 Sales</button>
-    <button class="tab" data-tab="expenses">💸 Expenses</button>
-    <button class="tab" data-tab="stock">📦 Stock</button>
-  </nav>
+    <section class="ai-box">
+      <h3>🧠 Business Insight</h3>
+      <p id="aiInsight">Add some data to see insights...</p>
+    </section>
 
-  <!-- SALES -->
-  <section id="sales" class="panel active">
-    <h2>Record a Sale</h2>
-    <div class="form">
-      <input id="saleName" placeholder="Product name">
-      <input id="saleQty" type="number" placeholder="Quantity" min="1">
-      <input id="salePrice" type="number" placeholder="Price per unit">
-      <button onclick="addSale()">Add Sale</button>
-    </div>
-    <ul id="salesList"></ul>
-  </section>
+    <nav class="tabs">
+      <button class="tab active" data-tab="sales">💰 Sales</button>
+      <button class="tab" data-tab="expenses">💸 Expenses</button>
+      <button class="tab" data-tab="stock">📦 Stock</button>
+    </nav>
 
-  <!-- EXPENSES -->
-  <section id="expenses" class="panel">
-    <h2>Record an Expense</h2>
-    <div class="form">
-      <input id="expName" placeholder="Expense name (e.g. Rent)">
-      <input id="expAmount" type="number" placeholder="Amount">
-      <button onclick="addExpense()">Add Expense</button>
-    </div>
-    <ul id="expensesList"></ul>
-  </section>
+    <section id="sales" class="panel active">
+      <h2>Record a Sale</h2>
+      <div class="form">
+        <input id="saleName" placeholder="Product name">
+        <input id="saleQty" type="number" placeholder="Quantity" min="1">
+        <input id="salePrice" type="number" placeholder="Price per unit (K)">
+        <button onclick="addSale()">Add Sale</button>
+      </div>
+      <ul id="salesList"></ul>
+    </section>
 
-  <!-- STOCK -->
-  <section id="stock" class="panel">
-    <h2>Manage Stock</h2>
-    <div class="form">
-      <input id="stockName" placeholder="Product name">
-      <input id="stockQty" type="number" placeholder="Quantity" min="0">
-      <input id="stockThreshold" type="number" placeholder="Low-stock alert at" min="0">
-      <button onclick="addStock()">Add Product</button>
-    </div>
-    <ul id="stockList"></ul>
-  </section>
+    <section id="expenses" class="panel">
+      <h2>Record an Expense</h2>
+      <div class="form">
+        <input id="expName" placeholder="Expense name (e.g. Rent)">
+        <input id="expAmount" type="number" placeholder="Amount (K)">
+        <button onclick="addExpense()">Add Expense</button>
+      </div>
+      <ul id="expensesList"></ul>
+    </section>
+
+    <section id="stock" class="panel">
+      <h2>Manage Stock</h2>
+      <div class="form">
+        <input id="stockName" placeholder="Product name">
+        <input id="stockQty" type="number" placeholder="Quantity" min="0">
+        <input id="stockThreshold" type="number" placeholder="Low-stock alert at" min="0">
+        <button onclick="addStock()">Add Product</button>
+      </div>
+      <ul id="stockList"></ul>
+    </section>
+  </div>
 
   <script src="script.js"></script>
 </body>
